@@ -5,17 +5,17 @@ import { compose } from 'redux';
 
 import MainComponent from './main';
 
-import { loadItems } from './store/actions';
+import { loadArtists } from './store/actions';
 
 interface DispatchProps {}
 interface MapStateProps {}
 
 const mapStateToProps = (state: RootStore): MapStateProps => ({
-  items: state.main.items, // TODO: use reselect selector
+  artists: state.main.artists, // TODO: use reselect selector
 });
 
 const mapDispatchToProps: DispatchProps = {
-  loadItems,
+  loadArtists: loadArtists,
 };
 
 export default compose(

@@ -2,7 +2,7 @@ import axios from 'axios';
 import localStorageService from '@core/services/local-storage';
 import { ErrorCodes } from '../constants/constants';
 
-const baseURL = 'http://localhost:4201'; // default mocked server url
+const baseURL = 'http://ws.audioscrobbler.com/2.0/';
 
 class ApiService {
   public request: any;

@@ -2,33 +2,33 @@ import { ReturnType } from '@core/namespace';
 import { MainComponentState } from '../../namespace';
 
 export enum MainActionTypes {
-  LOAD_ITEMS = 'LOAD_ITEMS',
-  LOAD_ITEMS_SUCCESS = 'LOAD_ITEMS_SUCCESS',
-  LOAD_ITEMS_FAILED = 'LOAD_ITEMS_FAILED',
+  LOAD_ARTISTS = 'LOAD_ARTISTS',
+  LOAD_ARTISTS_SUCCESS = 'LOAD_ARTISTS_SUCCESS',
+  LOAD_ARTISTS_FAILED = 'LOAD_ARTISTS_FAILED',
 }
 
-export const loadItems = (payload: { id: number }) =>
+export const loadArtists = (payload: { name: string }) =>
   ({
-    type: MainActionTypes.LOAD_ITEMS,
+    type: MainActionTypes.LOAD_ARTISTS,
     payload,
   } as const);
 
-export type LoadItemsAction = ReturnType<typeof loadItems>;
+export type LoadArtistsAction = ReturnType<typeof loadArtists>;
 
-export const loadItemsSuccess = (payload: {
-  items: MainComponentState['items'];
+export const loadArtistsSuccess = (payload: {
+  results: MainComponentState['result'];
 }) =>
   ({
-    type: MainActionTypes.LOAD_ITEMS_SUCCESS,
+    type: MainActionTypes.LOAD_ARTISTS_SUCCESS,
     payload,
   } as const);
 
-export const loadItemsFailed = () =>
+export const loadArtistsFailed = () =>
   ({
-    type: MainActionTypes.LOAD_ITEMS_FAILED,
+    type: MainActionTypes.LOAD_ARTISTS_FAILED,
   } as const);
 
 export type MainActions =
-  | LoadItemsAction
-  | ReturnType<typeof loadItemsSuccess>
-  | ReturnType<typeof loadItemsFailed>;
+  | LoadArtistsAction
+  | ReturnType<typeof loadArtistsSuccess>
+  | ReturnType<typeof loadArtistsFailed>;

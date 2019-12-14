@@ -2,13 +2,13 @@ import React, { PureComponent } from 'react';
 import { InjectedIntlProps } from 'react-intl';
 import { v1 } from 'uuid';
 import { Input, Button } from '@core/components';
-import { loadItems } from './store/actions';
+import { loadArtists } from './store/actions';
 
 import { Title } from './components/title/title';
 
 interface OwnProps {
-  loadItems: typeof loadItems;
-  items: any;
+  loadArtists: typeof loadArtists;
+  artists: any;
 }
 
 type MainComponentProps = OwnProps & InjectedIntlProps;
@@ -19,8 +19,8 @@ class MainComponent extends PureComponent<MainComponentProps> {
   };
 
   public componentDidMount() {
-    this.props.loadItems({
-      id: 1,
+    this.props.loadArtists({
+      name: 'darkthrone',
     });
   }
 
@@ -36,7 +36,7 @@ class MainComponent extends PureComponent<MainComponentProps> {
   };
 
   render() {
-    const { items, intl } = this.props;
+    const { artists, intl } = this.props;
 
     return (
       <div>
@@ -48,8 +48,8 @@ class MainComponent extends PureComponent<MainComponentProps> {
           clickHandler={this.handleClick}
         />
         <ul>
-          {items.map((item: any) => {
-            return <li key={v1()}>{item.name}</li>;
+          {artists.map((artist: any) => {
+            return <li key={v1()}>{artist.name}</li>;
           })}
         </ul>
       </div>

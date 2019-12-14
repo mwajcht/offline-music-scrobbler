@@ -2,6 +2,7 @@ import { MainComponentState } from '../namespace';
 
 export const initial: MainComponentState = {
   isLoading: false,
-  items: [],
+  artists: [],
+  result: { artistmatches: { artist: []}},
   error: false,
 };

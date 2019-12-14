@@ -7,19 +7,19 @@ export const mainPageReducer = (
   action: MainActions,
 ): MainComponentState => {
   switch (action.type) {
-    case MainActionTypes.LOAD_ITEMS:
+    case MainActionTypes.LOAD_ARTISTS:
       return {
         ...state,
         isLoading: true,
         error: false,
       };
-    case MainActionTypes.LOAD_ITEMS_SUCCESS:
+    case MainActionTypes.LOAD_ARTISTS_SUCCESS:
       return {
         ...state,
-        items: action.payload.items,
+        artists: action.payload.results.artistmatches.artist,
         isLoading: false,
       };
-    case MainActionTypes.LOAD_ITEMS_FAILED:
+    case MainActionTypes.LOAD_ARTISTS_FAILED:
       return {
         ...state,
         isLoading: false,
