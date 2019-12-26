@@ -1,8 +1,10 @@
-import { MainComponentState } from '../namespace';
+import {MainComponentState} from '../namespace';
 
 export const initial: MainComponentState = {
   isLoading: false,
+  artistsResult: {artistmatches: {artist: []}},
+  albumsResult: {album: []},
   artists: [],
-  result: { artistmatches: { artist: []}},
+  albums: [],
   error: false,
 };

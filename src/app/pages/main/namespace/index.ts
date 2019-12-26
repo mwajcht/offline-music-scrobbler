@@ -10,9 +10,19 @@ export interface ArtistMatches {
   artistmatches: ArtistList
 }
 
+export interface Album {
+  name: string;
+}
+
+export interface AlbumList {
+  album: Album[];
+}
+
 export interface MainComponentState {
   isLoading: boolean;
-  result: ArtistMatches;
+  artistsResult: ArtistMatches;
+  albumsResult: AlbumList;
   artists: Artist[];
+  albums: Album[];
   error: boolean;
 }

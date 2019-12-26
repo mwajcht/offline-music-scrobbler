@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
 import { InjectedIntlProps } from 'react-intl';
-import { v1 } from 'uuid';
-import { Input, Button } from '@core/components';
-import { loadArtists } from './store/actions';
+import { Input, Button, Select } from '@core/components';
+import { loadArtists, loadAlbums } from './store/actions';
 
 import { Title } from './components/title/title';
 
 interface OwnProps {
   loadArtists: typeof loadArtists;
+  loadAlbums: typeof loadAlbums;
   artists: any;
+  albums: any;
 }
 
 type MainComponentProps = OwnProps & InjectedIntlProps;
@@ -16,12 +17,12 @@ type MainComponentProps = OwnProps & InjectedIntlProps;
 class MainComponent extends PureComponent<MainComponentProps> {
   public state = {
     inputText: '',
+    selectedArtist: '',
+    selectedAlbum: '',
   };
 
   public componentDidMount() {
-    this.props.loadArtists({
-      name: 'darkthrone',
-    });
+
   }
 
   private onInputChange = (value: string) => {
@@ -30,13 +31,30 @@ class MainComponent extends PureComponent<MainComponentProps> {
     });
   };
 
-  private handleClick = () => {
-    // tslint:disable-next-line:no-console
-    console.log(this.state.inputText);
+  private onArtistChange = (value: string) => {
+    this.props.loadAlbums({
+      name: value,
+    });
+    this.setState({
+      selectedArtist: value,
+    });
+  };
+
+  private onAlbumChange = (value: string) => {
+    this.setState({
+      selectedAlbum: value,
+    });
+  };
+
+  private searchArtists = () => {
+    // TODO clean artists and albums
+    this.props.loadArtists({
+      name: this.state.inputText,
+    });
   };
 
   render() {
-    const { artists, intl } = this.props;
+    const { artists, albums, intl } = this.props;
 
     return (
       <div>
@@ -44,14 +62,12 @@ class MainComponent extends PureComponent<MainComponentProps> {
         <Input onChange={this.onInputChange} />
         <Button
           type="button"
-          text="example button"
-          clickHandler={this.handleClick}
+          text="Search artist"
+          clickHandler={this.searchArtists}
         />
-        <ul>
-          {artists.map((artist: any) => {
-            return <li key={v1()}>{artist.name}</li>;
-          })}
-        </ul>
+        <Select onChange={this.onArtistChange} options={artists.map((artist: any) => artist.name)} />
+        <Select onChange={this.onAlbumChange} options={albums.map((album: any) => album.name)} />
+
       </div>
     );
   }

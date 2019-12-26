@@ -25,6 +25,24 @@ export const mainPageReducer = (
         isLoading: false,
         error: true,
       };
+    case MainActionTypes.LOAD_ALBUMS:
+      return {
+        ...state,
+        isLoading: true,
+        error: false,
+      };
+    case MainActionTypes.LOAD_ALBUMS_SUCCESS:
+      return {
+        ...state,
+        albums: action.payload.topalbums.album,
+        isLoading: false,
+      };
+    case MainActionTypes.LOAD_ALBUMS_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+      };
     default:
       return state;
   }
