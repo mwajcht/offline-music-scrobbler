@@ -43,6 +43,24 @@ export const mainPageReducer = (
         isLoading: false,
         error: true,
       };
+    case MainActionTypes.LOAD_TRACKS:
+      return {
+        ...state,
+        isLoading: true,
+        error: false,
+      };
+    case MainActionTypes.LOAD_TRACKS_SUCCESS:
+      return {
+        ...state,
+        tracks: action.payload.album.tracks.track,
+        isLoading: false,
+      };
+    case MainActionTypes.LOAD_TRACKS_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+      };
     default:
       return state;
   }
