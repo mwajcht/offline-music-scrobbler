@@ -30,7 +30,7 @@ export class Select extends PureComponent<SelectProps, State> {
   public render() {
     const { selectedValue } = this.state;
     return <select onChange={this.onChange} defaultValue="">
-      <option value="" disabled>Please Choose...</option>
+      <option value="">Please Choose...</option>
       {this.props.options.map((option: any) => {
         return <option selected={option === selectedValue} key={v1()} value={option}>{option}</option>;
       })}

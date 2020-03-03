@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { InjectedIntlProps } from 'react-intl';
 import { Input, Button, Select } from '@core/components';
-import { loadArtists, loadAlbums, loadTracks } from './store/actions';
+import { loadArtists, loadAlbums, loadTracks, clearArtists, clearAlbums, clearTracks } from './store/actions';
 import { v1 } from 'uuid';
 
 import { Title } from './components/title/title';
@@ -11,6 +11,9 @@ interface OwnProps {
   loadArtists: typeof loadArtists;
   loadAlbums: typeof loadAlbums;
   loadTracks: typeof loadTracks;
+  clearArtists: typeof clearArtists;
+  clearAlbums: typeof clearAlbums;
+  clearTracks: typeof clearTracks;
   artists: Artist[];
   albums: Album[];
   tracks: Track[];
@@ -36,6 +39,10 @@ class MainComponent extends PureComponent<MainComponentProps> {
   };
 
   private onArtistChange = (value: string) => {
+    this.props.clearAlbums();
+    this.setState({
+      selectedAlbum: '',
+    });
     this.props.loadAlbums({
       name: value,
     });
@@ -45,7 +52,7 @@ class MainComponent extends PureComponent<MainComponentProps> {
   };
 
   private onAlbumChange = (value: string) => {
-    // TODO clean tracks
+    this.props.clearTracks();
     this.props.loadTracks({
       artist: this.state.selectedArtist,
       album: value
@@ -56,8 +63,11 @@ class MainComponent extends PureComponent<MainComponentProps> {
   };
 
   private searchArtists = () => {
-    // TODO clean artists and albums and tracks
-
+    this.props.clearArtists();
+    this.setState({
+      selectedArtist: '',
+      selectedAlbum: '',
+    });
     this.props.loadArtists({
       name: this.state.inputText,
     });

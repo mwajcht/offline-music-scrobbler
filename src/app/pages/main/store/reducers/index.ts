@@ -61,6 +61,30 @@ export const mainPageReducer = (
         isLoading: false,
         error: true,
       };
+    case MainActionTypes.CLEAR_ARTISTS:
+      return {
+        ...state,
+        isLoading: false,
+        error: false,
+        artists: [],
+        albums: [],
+        tracks: [],
+      };
+    case MainActionTypes.CLEAR_ALBUMS:
+      return {
+        ...state,
+        isLoading: false,
+        error: false,
+        albums: [],
+        tracks: [],
+      };
+    case MainActionTypes.CLEAR_TRACKS:
+      return {
+        ...state,
+        isLoading: false,
+        error: false,
+        tracks: [],
+      };
     default:
       return state;
   }
