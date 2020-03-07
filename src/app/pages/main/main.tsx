@@ -6,6 +6,7 @@ import { v1 } from 'uuid';
 
 import { Title } from './components/title/title';
 import {Album, Artist, Track} from "@core/pages/main/namespace";
+import {getReadableLength} from "@core/namespace/utils/utils";
 
 interface OwnProps {
   loadArtists: typeof loadArtists;
@@ -78,7 +79,7 @@ class MainComponent extends PureComponent<MainComponentProps> {
 
     return (
       <div>
-        <Title text={intl.formatMessage({ id: 'page.main.hello' })} />
+        <Title text={intl.formatMessage({ id: 'page.main.title' })} />
         <Input onChange={this.onInputChange} />
         <Button
           type="button"
@@ -89,7 +90,7 @@ class MainComponent extends PureComponent<MainComponentProps> {
         <Select onChange={this.onAlbumChange} options={albums.map((album: any) => album.name)} />
         <ul>
           {tracks.map((track: Track) => {
-            return <li key={v1()}>{track.name} - {track.duration}</li>;
+            return <li key={v1()}>{track.name} - {getReadableLength(track.duration)}</li>;
           })}
         </ul>
       </div>

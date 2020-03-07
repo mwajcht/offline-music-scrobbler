@@ -1,4 +1,5 @@
 {
   "page.main.hello": "hello world",
+  "page.main.title": "Offline music scrobbler",
   "page.observables.hello": "hello observables"
 }

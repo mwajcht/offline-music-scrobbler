@@ -13,3 +13,12 @@ export interface Dict<T> {
 export type ReadOnly<T extends object> = {
   readonly [K in keyof T]: T[K];
 };
+
+export function getReadableLength(durationInSeconds: number) {
+  if (durationInSeconds == null) {
+    return "";
+  }
+  let minutes = Math.floor(durationInSeconds / 60);
+  let seconds = durationInSeconds % 60;
+  return minutes + ":" + seconds.toString().padStart(2, '0');
+}
