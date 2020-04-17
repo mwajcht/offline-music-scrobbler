@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { InjectedIntlProps } from 'react-intl';
+import { Redirect } from 'react-router';
 import { Input, Button, Select } from '@core/components';
 import { loadArtists, loadAlbums, loadTracks, clearArtists, clearAlbums, clearTracks } from './store/actions';
 import { v1 } from 'uuid';
@@ -18,6 +19,7 @@ interface OwnProps {
   artists: Artist[];
   albums: Album[];
   tracks: Track[];
+  sessionKey: string;
 }
 
 type MainComponentProps = OwnProps & InjectedIntlProps;
@@ -27,6 +29,7 @@ class MainComponent extends PureComponent<MainComponentProps> {
     inputText: '',
     selectedArtist: '',
     selectedAlbum: '',
+    shouldLogin: false,
   };
 
   public componentDidMount() {
@@ -74,16 +77,29 @@ class MainComponent extends PureComponent<MainComponentProps> {
     });
   };
 
+  private addToList = () => {
+
+  }
+
+  private scrobble = () => {
+    if (!this.props.sessionKey) {
+      this.setState({
+        shouldLogin: true,
+      });
+    }
+  };
+
   render() {
     const { artists, albums, tracks, intl } = this.props;
 
     return (
+      this.state.shouldLogin ? <Redirect to="/externalLogin" push /> :
       <div>
         <Title text={intl.formatMessage({ id: 'page.main.title' })} />
         <Input onChange={this.onInputChange} />
         <Button
           type="button"
-          text="Search artist"
+          text={intl.formatMessage({ id: 'page.main.artist.search' })}
           clickHandler={this.searchArtists}
         />
         <Select onChange={this.onArtistChange} options={artists.map((artist: any) => artist.name)} />
@@ -93,6 +109,16 @@ class MainComponent extends PureComponent<MainComponentProps> {
             return <li key={v1()}>{track.name} - {getReadableLength(track.duration)}</li>;
           })}
         </ul>
+        <Button
+          type="button"
+          text={intl.formatMessage({ id: 'page.main.list.add'})}
+          clickHandler={this.addToList}
+        />
+        <Button
+          type="button"
+          text={intl.formatMessage({ id: 'page.main.scrobble'})}
+          clickHandler={this.scrobble}
+        />
       </div>
     );
   }

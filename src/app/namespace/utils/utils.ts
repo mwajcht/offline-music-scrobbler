@@ -15,7 +15,7 @@ export type ReadOnly<T extends object> = {
 };
 
 export function getReadableLength(durationInSeconds: number) {
-  if (durationInSeconds == null) {
+  if (durationInSeconds === null) {
     return "";
   }
   let minutes = Math.floor(durationInSeconds / 60);

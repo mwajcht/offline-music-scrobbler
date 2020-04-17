@@ -12,8 +12,9 @@ interface MapStateProps {}
 
 const mapStateToProps = (state: RootStore): MapStateProps => ({
   artists: state.main.artists, // TODO: use reselect selector
-  albums: state.main.albums, // TODO: use reselect selector
-  tracks: state.main.tracks, // TODO: use reselect selector
+  albums: state.main.albums,
+  tracks: state.main.tracks,
+  sessionKey: state.login.sessionKey,
 });
 
 const mapDispatchToProps: DispatchProps = {

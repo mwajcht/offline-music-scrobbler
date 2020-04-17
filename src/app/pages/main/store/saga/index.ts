@@ -30,7 +30,6 @@ function* executeGetAlbums(action: any): SagaIterator {
 function* executeGetTracks(action: any): SagaIterator {
   try {
     const response = yield call(getTracksService, action.payload);
-    console.log('Response: ' + response);
     yield put(loadTracksSuccess(response));
   } catch (error) {
     yield put(loadTracksFailed());

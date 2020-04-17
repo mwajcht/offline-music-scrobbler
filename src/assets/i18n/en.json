@@ -1,5 +1,8 @@
 {
   "page.main.hello": "hello world",
+  "page.main.artist.search": "Search artist",
+  "page.main.list.add": "Add to list",
+  "page.main.scrobble": "Scrobble",
   "page.main.title": "Offline music scrobbler",
   "page.observables.hello": "hello observables"
 }

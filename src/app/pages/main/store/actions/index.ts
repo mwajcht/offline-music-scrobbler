@@ -49,8 +49,6 @@ export const clearArtists = () =>
     type: MainActionTypes.CLEAR_ARTISTS
   } as const);
 
-
-
 export type LoadArtistsAction = ReturnType<typeof loadArtists>;
 
 export type LoadAlbumsAction = ReturnType<typeof loadAlbums>;
