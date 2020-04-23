@@ -1,6 +1,7 @@
 import { LoginActions, LoginActionTypes } from '../actions/index';
 import { initial } from '../initial';
 import { LoginComponentState } from '../../namespace';
+import {default as localStorageService} from '@core/services/local-storage';
 
 export const loginPageReducer = (
   state = initial,
@@ -14,9 +15,11 @@ export const loginPageReducer = (
         error: false,
       };
     case LoginActionTypes.OBTAIN_SESSION_KEY_SUCCESS:
+      let newSessionKey = action.payload.session.key;
+      localStorageService.set('sessionKey', newSessionKey);
       return {
         ...state,
-        sessionKey: action.payload.session.key,
+        sessionKey: newSessionKey,
         isLoading: false,
       };
     case LoginActionTypes.OBTAIN_SESSION_KEY_FAILED:

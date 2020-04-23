@@ -5,7 +5,7 @@ import { compose } from 'redux';
 
 import MainComponent from './main';
 
-import { loadArtists, loadAlbums, loadTracks, clearArtists, clearAlbums, clearTracks } from './store/actions';
+import {loadArtists, loadAlbums, loadTracks, clearArtists, clearAlbums, clearTracks, scrobble} from './store/actions';
 
 interface DispatchProps {}
 interface MapStateProps {}
@@ -24,6 +24,7 @@ const mapDispatchToProps: DispatchProps = {
   clearArtists: clearArtists,
   clearAlbums: clearAlbums,
   clearTracks: clearTracks,
+  scrobble: scrobble,
 };
 
 export default compose(

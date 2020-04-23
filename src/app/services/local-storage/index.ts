@@ -1,5 +1,5 @@
 class LocalStorageService {
-  private readonly PREFIX: string = 'create-espeo-app';
+  private readonly PREFIX: string = 'offline-music-scrobbler';
 
   public get(key: string) {
     return localStorage.getItem(`${this.PREFIX}-${key}`);

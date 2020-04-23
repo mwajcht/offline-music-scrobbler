@@ -4,10 +4,14 @@ import { SagaIterator } from 'redux-saga';
 import { getArtistsService } from '@core/services/artists';
 import { getAlbumsService } from '@core/services/albums';
 import { getTracksService } from '@core/services/tracks';
-import { MainActionTypes,
+import { getScrobbleService } from "@core/services/scrobble";
+import {
+  MainActionTypes,
   loadArtistsSuccess, loadArtistsFailed,
   loadAlbumsSuccess, loadAlbumsFailed,
-  loadTracksSuccess, loadTracksFailed } from '../actions';
+  loadTracksSuccess, loadTracksFailed,
+  scrobbleSuccess, scrobbleFailed
+} from '../actions';
 
 function* executeGetArtists(action: any): SagaIterator {
   try {
@@ -36,8 +40,18 @@ function* executeGetTracks(action: any): SagaIterator {
   }
 }
 
+function* executeScrobble(action: any): SagaIterator {
+  try {
+    const response = yield call(getScrobbleService, action.payload);
+    yield put(scrobbleSuccess(response));
+  } catch (error) {
+    yield put(scrobbleFailed());
+  }
+}
+
 export default function* mainSaga() {
   yield all([takeLatest(MainActionTypes.LOAD_ARTISTS, executeGetArtists)]);
   yield all([takeLatest(MainActionTypes.LOAD_ALBUMS, executeGetAlbums)]);
   yield all([takeLatest(MainActionTypes.LOAD_TRACKS, executeGetTracks)]);
+  yield all([takeLatest(MainActionTypes.SCROBBLE, executeScrobble)]);
 }

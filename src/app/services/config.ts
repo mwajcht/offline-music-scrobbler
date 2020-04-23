@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import localStorageService from '@core/services/local-storage';
 import { ErrorCodes } from '../constants/constants';
 
 const baseURL = 'http://ws.audioscrobbler.com/2.0/';
 
 class ApiService {
-  public request: any;
+  public request: AxiosInstance;
 
   constructor() {
     const config = {
@@ -43,6 +43,10 @@ class ApiService {
   }
 
   public post<T>(url: string, data?: {}, options?: {}): Promise<T> {
+    return this.request.post(url, data, options);
+  }
+
+  public postFormData<T>(url: string, data?: {}, options?: {}): Promise<T> {
     return this.request.post(url, data, options);
   }
 

@@ -10,7 +10,7 @@ export const AppRoutes = () => (
       <Route path="/" exact component={MainPage as ComponentClass} />
       <Route path="/login" exact component={LoginPage as ComponentClass} />
       <Route path="/externalLogin" exact component={() => {
-        window.location.href = 'http://www.last.fm/api/auth/?api_key=9b7c7e671de62adb71500c2ff8147453&cb=http://localhost:4200/login';
+        window.location.href = 'http://www.last.fm/api/auth/?api_key=' + process.env.API_KEY + '&cb=http://localhost:4200/login';
         return null;
       }} />
     </Switch>

@@ -10,10 +10,6 @@ interface OwnProps {
 type LoginComponentProps = OwnProps & RouteComponentProps;
 
 class LoginComponent extends PureComponent<LoginComponentProps> {
-  public state = {
-    loginSuccessful: false,
-  };
-
   public componentDidMount() {
     let qs = require('qs');
     let token = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).token;
@@ -24,11 +20,9 @@ class LoginComponent extends PureComponent<LoginComponentProps> {
 
   render() {
     return (
-      // this.state.loginSuccessful ? <Redirect to="/" push /> :
-      this.props.sessionKey ? <Redirect to="/" push /> :
-      <div>
-        {/*token*/}
-      </div>
+      this.props.sessionKey
+        ? <Redirect to="/" push />
+        : <div/>
     );
   }
 }

@@ -1,6 +1,7 @@
 import { MainActions, MainActionTypes } from '../actions/index';
 import { initial } from '../initial';
-import { MainComponentState } from '../../namespace';
+import {MainComponentState, PlayedTrack} from '../../namespace';
+import {default as localStorageService} from '@core/services/local-storage';
 
 export const mainPageReducer = (
   state = initial,
@@ -84,6 +85,26 @@ export const mainPageReducer = (
         isLoading: false,
         error: false,
         tracks: [],
+      };
+    case MainActionTypes.SCROBBLE:
+      return {
+        ...state,
+        isLoading: true,
+        error: false,
+      };
+    case MainActionTypes.SCROBBLE_SUCCESS:
+      localStorageService.remove('playedTracks');
+      return {
+        ...state,
+        playedTracks: new Array<PlayedTrack>(),
+        isLoading: false,
+      };
+    case MainActionTypes.SCROBBLE_FAILED:
+      localStorageService.remove('sessionKey');
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
       };
     default:
       return state;

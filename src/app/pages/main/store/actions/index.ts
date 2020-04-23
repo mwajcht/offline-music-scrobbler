@@ -1,5 +1,5 @@
 import { ReturnType } from '@core/namespace';
-import { MainComponentState } from '../../namespace';
+import { MainComponentState, PlayedTrack } from '../../namespace';
 
 export enum MainActionTypes {
   LOAD_ARTISTS = 'LOAD_ARTISTS',
@@ -14,6 +14,9 @@ export enum MainActionTypes {
   CLEAR_TRACKS = 'CLEAR_TRACKS',
   LOAD_TRACKS_SUCCESS = 'LOAD_TRACKS_SUCCESS',
   LOAD_TRACKS_FAILED = 'LOAD_TRACKS_FAILED',
+  SCROBBLE = 'SCROBBLE',
+  SCROBBLE_SUCCESS = 'SCROBBLE_SUCCESS',
+  SCROBBLE_FAILED = 'SCROBBLE_FAILED',
 }
 
 export const loadArtists = (payload: { name: string }) =>
@@ -49,6 +52,12 @@ export const clearArtists = () =>
     type: MainActionTypes.CLEAR_ARTISTS
   } as const);
 
+export const scrobble = (payload: { tracks: PlayedTrack[], sessionKey: string}) =>
+  ({
+    type: MainActionTypes.SCROBBLE,
+    payload
+  } as const);
+
 export type LoadArtistsAction = ReturnType<typeof loadArtists>;
 
 export type LoadAlbumsAction = ReturnType<typeof loadAlbums>;
@@ -60,6 +69,8 @@ export type ClearArtistsAction = ReturnType<typeof clearArtists>;
 export type ClearAlbumsAction = ReturnType<typeof clearAlbums>;
 
 export type ClearTracksAction = ReturnType<typeof clearTracks>;
+
+export type ScrobbleAction = ReturnType<typeof scrobble>;
 
 export const loadArtistsSuccess = (payload: {
   results: MainComponentState['artistsResult'];
@@ -100,6 +111,19 @@ export const loadTracksFailed = () =>
     type: MainActionTypes.LOAD_TRACKS_FAILED,
   } as const);
 
+export const scrobbleSuccess = (payload: {
+  scrobbles: MainComponentState['scrobbleResult'];
+}) =>
+  ({
+    type: MainActionTypes.SCROBBLE_SUCCESS,
+    payload,
+  } as const);
+
+export const scrobbleFailed = () =>
+  ({
+    type: MainActionTypes.SCROBBLE_FAILED,
+  } as const);
+
 export type MainActions =
   | LoadArtistsAction
   | LoadAlbumsAction
@@ -107,9 +131,12 @@ export type MainActions =
   | ClearArtistsAction
   | ClearAlbumsAction
   | ClearTracksAction
+  | ScrobbleAction
   | ReturnType<typeof loadArtistsSuccess>
   | ReturnType<typeof loadArtistsFailed>
   | ReturnType<typeof loadAlbumsSuccess>
   | ReturnType<typeof loadAlbumsFailed>
   | ReturnType<typeof loadTracksSuccess>
-  | ReturnType<typeof loadTracksFailed>;
+  | ReturnType<typeof loadTracksFailed>
+  | ReturnType<typeof scrobbleSuccess>
+  | ReturnType<typeof scrobbleFailed>;
