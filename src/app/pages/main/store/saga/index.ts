@@ -4,13 +4,17 @@ import { SagaIterator } from 'redux-saga';
 import { getArtistsService } from '@core/services/artists';
 import { getAlbumsService } from '@core/services/albums';
 import { getTracksService } from '@core/services/tracks';
-import { getScrobbleService } from "@core/services/scrobble";
+import { getScrobbleService } from '@core/services/scrobble';
 import {
   MainActionTypes,
-  loadArtistsSuccess, loadArtistsFailed,
-  loadAlbumsSuccess, loadAlbumsFailed,
-  loadTracksSuccess, loadTracksFailed,
-  scrobbleSuccess, scrobbleFailed
+  loadArtistsSuccess,
+  loadArtistsFailed,
+  loadAlbumsSuccess,
+  loadAlbumsFailed,
+  loadTracksSuccess,
+  loadTracksFailed,
+  scrobbleSuccess,
+  scrobbleFailed,
 } from '../actions';
 
 function* executeGetArtists(action: any): SagaIterator {

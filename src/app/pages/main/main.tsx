@@ -1,14 +1,28 @@
-import React, {PureComponent} from 'react';
-import {InjectedIntlProps} from 'react-intl';
-import {Redirect} from 'react-router';
-import {Button, Input, Select} from '@core/components';
-import {clearAlbums, clearArtists, clearTracks, loadAlbums, loadArtists, loadTracks, scrobble} from './store/actions';
-import {v1} from 'uuid';
-import {default as localStorageService} from '@core/services/local-storage';
-import {Title} from './components/title/title';
-import {Album, Artist, MainComponentState, PlayedTrack, Track} from "@core/pages/main/namespace";
-import {getReadableLength} from "@core/namespace/utils/utils";
-import {initial} from "@core/pages/main/store/initial";
+import React, { PureComponent } from 'react';
+import { InjectedIntlProps } from 'react-intl';
+import { Redirect } from 'react-router';
+import { Button, Input, Select } from '@core/components';
+import { v1 } from 'uuid';
+import localStorageService from '@core/services/local-storage';
+import {
+  Album,
+  Artist,
+  MainComponentState,
+  PlayedTrack,
+  Track,
+} from '@core/pages/main/namespace';
+import { getReadableLength } from '@core/namespace/utils/utils';
+import { initial } from '@core/pages/main/store/initial';
+import { Title } from './components/title/title';
+import {
+  clearAlbums,
+  clearArtists,
+  clearTracks,
+  loadAlbums,
+  loadArtists,
+  loadTracks,
+  scrobble,
+} from './store/actions';
 
 interface OwnProps {
   loadArtists: typeof loadArtists;
@@ -26,26 +40,30 @@ interface OwnProps {
 
 type MainComponentProps = OwnProps & InjectedIntlProps;
 
-class MainComponent extends PureComponent<MainComponentProps, MainComponentState> {
+class MainComponent extends PureComponent<
+  MainComponentProps,
+  MainComponentState
+> {
+  private static storePlayedTracksInStorage(playedTracks: PlayedTrack[]) {
+    localStorageService.set('playedTracks', JSON.stringify(playedTracks));
+  }
+
   public state = initial;
 
   public componentDidMount() {
     this.setState({
-      playedTracks: MainComponent.getPlayedTracksFromStorage()
-    })
+      playedTracks: MainComponent.getPlayedTracksFromStorage(),
+    });
   }
 
   private static getPlayedTracksFromStorage(): PlayedTrack[] {
     if (localStorageService.get('playedTracks')) {
-      let deserializedTracks = JSON.parse(localStorageService.get('playedTracks') as string);
+      const deserializedTracks = JSON.parse(localStorageService.get(
+        'playedTracks',
+      ) as string);
       return Object.assign(new Array<PlayedTrack>(), deserializedTracks);
-    } else {
-      return new Array<PlayedTrack>();
     }
-  }
-
-  private static storePlayedTracksInStorage(playedTracks: PlayedTrack[]) {
-    localStorageService.set('playedTracks', JSON.stringify(playedTracks));
+    return new Array<PlayedTrack>();
   }
 
   private onInputChange = (value: string) => {
@@ -71,7 +89,7 @@ class MainComponent extends PureComponent<MainComponentProps, MainComponentState
     this.props.clearTracks();
     this.props.loadTracks({
       artist: this.state.selectedArtist,
-      album: value
+      album: value,
     });
     this.setState({
       selectedAlbum: value,
@@ -91,33 +109,30 @@ class MainComponent extends PureComponent<MainComponentProps, MainComponentState
 
   private addToList = () => {
     if (this.props.tracks.length > 0) {
-      //let newPlayedTracks = new Array<PlayedTrack>();
-      let newPlayedTracks = [...this.state.playedTracks];
-      this.props.tracks.forEach(track => {
-        newPlayedTracks.push(new PlayedTrack(this.state.selectedArtist, this.state.selectedAlbum, track.name, track.duration));
-      });
-      MainComponent.storePlayedTracksInStorage(newPlayedTracks);
-      this.setState({
-        playedTracks: newPlayedTracks,
+      this.setState(prevState => {
+        const newPlayedTracks = [...prevState.playedTracks];
+        this.props.tracks.forEach(track => {
+          newPlayedTracks.push(
+            new PlayedTrack(
+              prevState.selectedArtist,
+              prevState.selectedAlbum,
+              track.name,
+              track.duration,
+            ),
+          );
+        });
+        MainComponent.storePlayedTracksInStorage(newPlayedTracks);
+        return {
+          playedTracks: newPlayedTracks,
+        };
       });
     }
-  }
-
-  private deleteFromList(trackToRemove: PlayedTrack) {
-    const newPlayedTracks = [...this.state.playedTracks];
-    const index = newPlayedTracks.findIndex(currentTrack => currentTrack === trackToRemove);
-
-    if (index === -1) return;
-    newPlayedTracks.splice(index, 1);
-
-    MainComponent.storePlayedTracksInStorage(newPlayedTracks);
-    this.setState({
-      playedTracks: newPlayedTracks
-    });
-  }
+  };
 
   private scrobble = () => {
-    const sessionKey = this.props.sessionKey ? this.props.sessionKey : localStorageService.get('sessionKey');
+    const sessionKey = this.props.sessionKey
+      ? this.props.sessionKey
+      : localStorageService.get('sessionKey');
     if (!sessionKey) {
       this.setState({
         shouldLogin: true,
@@ -125,17 +140,38 @@ class MainComponent extends PureComponent<MainComponentProps, MainComponentState
     } else {
       this.props.scrobble({
         tracks: this.state.playedTracks,
-        sessionKey: sessionKey
+        sessionKey,
       });
     }
   };
+
+  private deleteFromList(trackToRemove: PlayedTrack) {
+    this.setState(prevState => {
+      const newPlayedTracks = [...prevState.playedTracks];
+      const index = newPlayedTracks.findIndex(
+        currentTrack => currentTrack === trackToRemove,
+      );
+
+      if (index === -1)
+        return {
+          playedTracks: prevState.playedTracks,
+        };
+      newPlayedTracks.splice(index, 1);
+
+      MainComponent.storePlayedTracksInStorage(newPlayedTracks);
+      return {
+        playedTracks: newPlayedTracks,
+      };
+    });
+  }
 
   render() {
     const { artists, albums, tracks, intl } = this.props;
     const { playedTracks } = this.state;
 
-    return (
-      this.state.shouldLogin ? <Redirect to="/externalLogin" push /> :
+    return this.state.shouldLogin ? (
+      <Redirect to="/externalLogin" push />
+    ) : (
       <div>
         <Title text={intl.formatMessage({ id: 'page.main.title' })} />
         <Input onChange={this.onInputChange} />
@@ -144,35 +180,47 @@ class MainComponent extends PureComponent<MainComponentProps, MainComponentState
           text={intl.formatMessage({ id: 'page.main.artist.search' })}
           clickHandler={this.searchArtists}
         />
-        <Select onChange={this.onArtistChange} options={artists.map((artist: any) => artist.name)} />
-        <Select onChange={this.onAlbumChange} options={albums.map((album: any) => album.name)} />
+        <Select
+          onChange={this.onArtistChange}
+          options={artists.map((artist: any) => artist.name)}
+        />
+        <Select
+          onChange={this.onAlbumChange}
+          options={albums.map((album: any) => album.name)}
+        />
         <ul>
           {tracks.map((track: Track) => {
-            return <li key={v1()}>{track.name} - {getReadableLength(track.duration)}</li>;
+            return (
+              <li key={v1()}>
+                {track.name} - {getReadableLength(track.duration)}
+              </li>
+            );
           })}
         </ul>
         <Button
           type="button"
-          text={intl.formatMessage({ id: 'page.main.list.add'})}
+          text={intl.formatMessage({ id: 'page.main.list.add' })}
           clickHandler={this.addToList}
           disabled={tracks.length === 0}
         />
         <Button
           type="button"
-          text={intl.formatMessage({ id: 'page.main.scrobble'})}
+          text={intl.formatMessage({ id: 'page.main.scrobble' })}
           clickHandler={this.scrobble}
           disabled={playedTracks.length === 0}
         />
         <p>{intl.formatMessage({ id: 'page.main.tracks.to.scrobble' })}</p>
         <ul>
           {playedTracks.map((track: PlayedTrack) => {
-            return <li key={v1()}>
-              {track.artist} - {track.album} - {track.track}
-              <Button
-                text={'x'}
-                clickHandler={() => this.deleteFromList(track)}
-              />
-            </li>;
+            return (
+              <li key={v1()}>
+                {track.artist} - {track.album} - {track.track}
+                <Button
+                  text="x"
+                  clickHandler={() => this.deleteFromList(track)}
+                />
+              </li>
+            );
           })}
         </ul>
       </div>

@@ -31,7 +31,7 @@ export const loadAlbums = (payload: { name: string }) =>
     payload,
   } as const);
 
-export const loadTracks = (payload: { artist: string, album: string }) =>
+export const loadTracks = (payload: { artist: string; album: string }) =>
   ({
     type: MainActionTypes.LOAD_TRACKS,
     payload,
@@ -39,23 +39,26 @@ export const loadTracks = (payload: { artist: string, album: string }) =>
 
 export const clearTracks = () =>
   ({
-    type: MainActionTypes.CLEAR_TRACKS
+    type: MainActionTypes.CLEAR_TRACKS,
   } as const);
 
 export const clearAlbums = () =>
   ({
-    type: MainActionTypes.CLEAR_ALBUMS
+    type: MainActionTypes.CLEAR_ALBUMS,
   } as const);
 
 export const clearArtists = () =>
   ({
-    type: MainActionTypes.CLEAR_ARTISTS
+    type: MainActionTypes.CLEAR_ARTISTS,
   } as const);
 
-export const scrobble = (payload: { tracks: PlayedTrack[], sessionKey: string}) =>
+export const scrobble = (payload: {
+  tracks: PlayedTrack[];
+  sessionKey: string;
+}) =>
   ({
     type: MainActionTypes.SCROBBLE,
-    payload
+    payload,
   } as const);
 
 export type LoadArtistsAction = ReturnType<typeof loadArtists>;

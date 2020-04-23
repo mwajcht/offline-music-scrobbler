@@ -15,7 +15,7 @@ const mapStateToProps = (state: RootStore): MapStateProps => ({
 });
 
 const mapDispatchToProps: DispatchProps = {
-  obtainSessionKey: obtainSessionKey,
+  obtainSessionKey,
 };
 
 export default compose(

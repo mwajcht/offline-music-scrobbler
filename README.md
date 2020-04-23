@@ -51,21 +51,6 @@ Full build:
 yarn build
 ```
 
-Run mocked server (on port 4201):
-```bash
-yarn mocked-server
-```
-
-Open Cypress panel (required running mocked-server & build dist):
-```bash
-yarn cy:open
-```
-
-Run Cypress tests in headless mode (required running mocked-server & build dist):
-```bash
-yarn cy:run
-```
-
 Remove builded files:
 ```bash
 yarn clean
@@ -96,8 +81,6 @@ yarn analyze
 * [TSLint](https://palantir.github.io/tslint/)
 
 * [Webpack](https://webpack.js.org/)
-
-* [Cypress](https://cypress.io/) (optional)
 
 ## Snippets
 
@@ -187,20 +170,3 @@ CSS-IN-JS:
 * [typestyle](https://github.com/typestyle/typestyle)
 
 * [emotion](https://github.com/emotion-js/emotion)
-
-## Remove unused CI
-
-Circle:
-```bash
-rm -rf .circleci
-```
-
-Bitbucket pipelines:
-```bash
-rm bitbucket-pipelines.yml
-```
-
-GitlabCI
-```bash
-rm .gitlab-ci.yml
-```

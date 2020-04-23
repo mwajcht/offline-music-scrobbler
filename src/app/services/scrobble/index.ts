@@ -1,5 +1,19 @@
+import { PlayedTrack } from '@core/pages/main/namespace';
 import ApiService from '../config';
-import { PlayedTrack } from "@core/pages/main/namespace";
+
+function getParameterName(parameter: string, index: number) {
+  return `${parameter}[${index}]`;
+}
+
+function getSignature(body: URLSearchParams): string {
+  const md5 = require('md5');
+  let toSign = '';
+  body.forEach((value, key) => {
+    toSign += key.concat(value);
+  });
+  toSign += process.env.API_SECRET;
+  return md5(toSign);
+}
 
 /**
  * up to a maximum of 50 scrobbles per batch [0<=i<=49]
@@ -23,49 +37,34 @@ import { PlayedTrack } from "@core/pages/main/namespace";
  *
  * @param payload
  */
-export const getScrobbleService = (payload: { tracks: PlayedTrack[], sessionKey: string }) => {
+export const getScrobbleService = (payload: {
+  tracks: PlayedTrack[];
+  sessionKey: string;
+}) => {
   const body = new URLSearchParams();
   body.set('method', 'track.scrobble');
   body.set('sk', payload.sessionKey);
   body.set('api_key', process.env.API_KEY as string);
   let playTimestamp = Math.round(new Date().getTime() / 1000); // seconds since Epoch
   // TODO make multiple calls when there is more than 50 tracks to scrobble
-  for (let i in payload.tracks.reverse()) {
+  for (let i = payload.tracks.length - 1; i >= 0; i -= 1) {
     playTimestamp -= payload.tracks[i].duration;
-    let track = payload.tracks[i];
+    const track = payload.tracks[i];
     body.set(getParameterName('artist', i), track.artist);
     body.set(getParameterName('album', i), track.album);
     body.set(getParameterName('track', i), track.track);
     body.set(getParameterName('duration', i), track.duration.toString());
     body.set(getParameterName('timestamp', i), playTimestamp.toString());
   }
+  body.sort();
   body.set('api_sig', getSignature(body));
   body.set('format', 'json');
 
   return ApiService.post('/', body, {
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  })
-    .then((data: any) => {
-      return data.data;
-    });
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  }).then((data: any) => {
+    return data.data;
+  });
 };
-
-function getParameterName(parameter: string, index: string) {
-  return parameter + '[' + index + ']';
-}
-
-function getSignature(body: URLSearchParams): string {
-  const md5 = require('md5');
-  let keys = new Array<string>();
-  for (let key of body.keys()) {
-    keys.push(key);
-  }
-  let toSign = keys
-    .sort()
-    .map(key => key.concat(body.get(key) as string))
-    .reduce((prev, current) => prev.concat(current), '');
-  toSign += process.env.API_SECRET;
-  return md5(toSign);
-}

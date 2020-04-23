@@ -7,7 +7,7 @@ export interface ArtistList {
 }
 
 export interface ArtistMatches {
-  artistmatches: ArtistList
+  artistmatches: ArtistList;
 }
 
 export interface Album {
@@ -19,7 +19,7 @@ export interface AlbumList {
 }
 
 export interface Track {
-  //rank: number;
+  // rank: number;
   name: string;
   duration: number;
 }
@@ -31,9 +31,13 @@ export class PlayedTrack {
     this.track = track;
     this.duration = duration;
   }
+
   artist: string;
+
   album: string;
+
   track: string;
+
   duration: number;
 }
 
@@ -70,9 +74,9 @@ export interface MainComponentState {
   albums: Album[];
   tracks: Track[];
   error: boolean;
-  inputText: string,
-  selectedArtist: string,
-  selectedAlbum: string,
-  shouldLogin: boolean,
-  playedTracks: PlayedTrack[],
+  inputText: string;
+  selectedArtist: string;
+  selectedAlbum: string;
+  shouldLogin: boolean;
+  playedTracks: PlayedTrack[];
 }

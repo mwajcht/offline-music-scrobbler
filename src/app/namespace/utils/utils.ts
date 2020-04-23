@@ -16,9 +16,9 @@ export type ReadOnly<T extends object> = {
 
 export function getReadableLength(durationInSeconds: number) {
   if (durationInSeconds === null) {
-    return "";
+    return '';
   }
-  let minutes = Math.floor(durationInSeconds / 60);
-  let seconds = durationInSeconds % 60;
-  return minutes + ":" + seconds.toString().padStart(2, '0');
+  const minutes = Math.floor(durationInSeconds / 60);
+  const seconds = durationInSeconds % 60;
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 }

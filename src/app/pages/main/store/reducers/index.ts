@@ -1,7 +1,7 @@
+import localStorageService from '@core/services/local-storage';
 import { MainActions, MainActionTypes } from '../actions/index';
 import { initial } from '../initial';
-import {MainComponentState, PlayedTrack} from '../../namespace';
-import {default as localStorageService} from '@core/services/local-storage';
+import { MainComponentState, PlayedTrack } from '../../namespace';
 
 export const mainPageReducer = (
   state = initial,

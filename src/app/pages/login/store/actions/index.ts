@@ -10,7 +10,7 @@ export enum LoginActionTypes {
 export const obtainSessionKey = (payload: { token: string }) =>
   ({
     type: LoginActionTypes.OBTAIN_SESSION_KEY,
-    payload
+    payload,
   } as const);
 
 export type ObtainSessionKeyAction = ReturnType<typeof obtainSessionKey>;
@@ -28,7 +28,7 @@ export const obtainSessionKeyFailed = () =>
     type: LoginActionTypes.OBTAIN_SESSION_KEY_FAILED,
   } as const);
 
-export type  LoginActions =
+export type LoginActions =
   | ObtainSessionKeyAction
   | ReturnType<typeof obtainSessionKeySuccess>
   | ReturnType<typeof obtainSessionKeyFailed>;

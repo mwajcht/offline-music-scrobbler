@@ -6,7 +6,7 @@ export const getArtistsService = (payload: { name: string }) => {
     method: 'artist.search',
     artist: payload.name,
     api_key: process.env.API_KEY,
-    format: 'json'
+    format: 'json',
   }).then((data: any) => {
     return data.data;
   });

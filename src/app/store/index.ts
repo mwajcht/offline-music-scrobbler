@@ -10,7 +10,7 @@ import rootSaga from './rootSaga';
 
 export interface RootStore {
   main: MainComponentState;
-  login: LoginComponentState
+  login: LoginComponentState;
 }
 const sagaMiddleware = createSagaMiddleware();
 
@@ -25,4 +25,3 @@ export const rootStore = createStore(
 );
 
 sagaMiddleware.run(rootSaga);
-

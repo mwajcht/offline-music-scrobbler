@@ -6,7 +6,7 @@ export const getAlbumsService = (payload: { name: string }) => {
     method: 'artist.gettopalbums',
     artist: payload.name,
     api_key: process.env.API_KEY,
-    format: 'json'
+    format: 'json',
   }).then((data: any) => {
     return data.data;
   });

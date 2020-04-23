@@ -1,4 +1,4 @@
-import { getReadableLength } from "./utils";
+import { getReadableLength } from './utils';
 
 describe('Utils', () => {
   it('should return 0:00 for duration of 0 seconds', () => {
