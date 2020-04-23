@@ -1,4 +1,6 @@
-# Create-espeo-app
+# Offline music scrobbler
+
+Last.fm scrobbler for music listened from offline sources (e.g. CDs, vinyls).
 
 ## CLI
 
@@ -129,16 +131,6 @@ espeo-reducers-tests
 * Create simple unit test (required `.ts` extension in `spec` director)
 ```bash
 espeo-unit-test
-```
-
-* Create cypress test (required `.spec.js` extension in `cypres/integrations` directory)
-```bash
-espeo-cypress-test
-```
-
-* Create cypress command (required `.js` extension in `cypres/support` directory)
-```bash
-espeo-cypress-command
 ```
 
 ## Customize
