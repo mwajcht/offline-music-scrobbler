@@ -180,14 +180,18 @@ class MainComponent extends PureComponent<
           text={intl.formatMessage({ id: 'page.main.artist.search' })}
           clickHandler={this.searchArtists}
         />
-        <Select
-          onChange={this.onArtistChange}
-          options={artists.map((artist: any) => artist.name)}
-        />
-        <Select
-          onChange={this.onAlbumChange}
-          options={albums.map((album: any) => album.name)}
-        />
+        <div>
+          <Select
+            onChange={this.onArtistChange}
+            options={artists.map((artist: any) => artist.name)}
+          />
+        </div>
+        <div>
+          <Select
+            onChange={this.onAlbumChange}
+            options={albums.map((album: any) => album.name)}
+          />
+        </div>
         <ul>
           {tracks.map((track: Track) => {
             return (
