@@ -2,6 +2,9 @@
 
 Last.fm scrobbler for music listened from offline sources (e.g. CDs, vinyls).
 
+To make it possible to call Last.fm API, you need to create a developer account at https://www.last.fm/api/account/create
+and fill API_KEY and API_SECRET properties in `.env.development` file. 
+
 ## CLI
 
 Install dependencies:
