@@ -2,6 +2,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "target": "es6",
+    "module": "esNext",
     "outDir": "./dist",
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -16,12 +17,14 @@
     "experimentalDecorators": true,
     "jsx": "react",
     "jsxFactory": "React.createElement",
-    "baseUrl": "./src",
+    "baseUrl": "src",
     "paths": {
       "@core/*": ["app/*"],
-      "@environments/*": ["environments/*"],
-      "@pages": ["pages/*"],
-      "@assets/*": ["assets/*"]
+      "@environments/*": ["app/environments/*"],
+      "@pages/*": ["app/pages/*"],
+      "@assets/*": ["assets/*"],
+      "@styles/*": ["app/styles/*"],
+      "@services/*": ["app/services/*"]
     },
     "typeRoots": ["node_modules/@types"],
     "lib": ["dom", "esnext"]

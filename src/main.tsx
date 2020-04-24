@@ -6,13 +6,13 @@ import { ThemeProvider } from 'styled-components';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 
-import translationsEn from '@assets/i18n/en.json';
-
-import { defaultTheme } from '@core/styles/themes';
+import { defaultTheme } from '@styles/themes';
 import { AppRoutes } from '@core/config/routes';
 import { rootStore } from '@core/store';
 
 import '@assets/external-styles/main.css';
+
+const translationsEn = require('@assets/i18n/en.json');
 
 addLocaleData([...en]);
 

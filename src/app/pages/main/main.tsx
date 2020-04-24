@@ -58,9 +58,9 @@ class MainComponent extends PureComponent<
 
   private static getPlayedTracksFromStorage(): PlayedTrack[] {
     if (localStorageService.get('playedTracks')) {
-      const deserializedTracks = JSON.parse(localStorageService.get(
-        'playedTracks',
-      ) as string);
+      const deserializedTracks = JSON.parse(
+        localStorageService.get('playedTracks') as string,
+      );
       return Object.assign(new Array<PlayedTrack>(), deserializedTracks);
     }
     return new Array<PlayedTrack>();

@@ -1,25 +1,27 @@
 const path = require('path');
 const fs = require('fs');
-
 const webpack = require('webpack');
 const dotenv = require('dotenv');
-
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const autoprefixer = require('autoprefixer');
-const TerserPlugin = require('terser-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const inAnalyze = process.env.ANALYZE === 'true';
 const getPath = file => path.resolve(__dirname, file);
 const currentPath = path.join(__dirname);
 
 const processEnvFiles = mode => {
+  const modeFile = mode === 'none' ? 'local' : mode;
+
   const baseEnvPath = `${currentPath}/.env`;
-  const envPath = `${baseEnvPath}.${mode}`;
+  const envPath = `${baseEnvPath}.${modeFile}`;
   const finalPath = fs.existsSync(envPath) ? envPath : baseEnvPath;
-  const fileEnv = dotenv.config({ path: finalPath }).parsed;
+  const fileEnv = dotenv.config({
+    path: finalPath,
+  }).parsed;
   const envKeys = Object.keys(fileEnv).reduce((prev, next) => {
     const prevCopy = JSON.parse(JSON.stringify(prev));
 
@@ -38,16 +40,11 @@ module.exports = (env, args) => {
       app: './src/main.tsx',
     },
     output: {
-      filename: isProduction ? './bundle.[hash].js' : './bundle.js',
+      filename: isProduction ? '[name].bundle.[hash].js' : '[name].bundle.js',
     },
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
-      alias: {
-        '@core': getPath('./src/app'),
-        '@environments': getPath('./src/environments'),
-        '@assets': getPath('./src/assets/'),
-        '@pages': getPath('./src/app/pages'),
-      },
+      plugins: [new TsconfigPathsPlugin()],
     },
     module: {
       rules: [
@@ -77,16 +74,28 @@ module.exports = (env, args) => {
       ],
     },
     bail: isProduction,
-    optimization: {
-      minimize: isProduction,
-      minimizer: isProduction ? [new TerserPlugin()] : [],
-    },
+    optimization: isProduction
+      ? {
+          runtimeChunk: 'single',
+          splitChunks: {
+            cacheGroups: {
+              commons: {
+                test: /[\\/]node_modules[\\/]/,
+                name: 'vendors',
+                chunks: 'all',
+              },
+            },
+          },
+        }
+      : {},
     devtool: !isProduction ? 'source-map' : 'none',
     plugins: [
       new webpack.DefinePlugin(processEnvFiles(args.mode)),
       new HtmlWebpackPlugin({
         template: './public/index.html',
-        inject: false,
+        inject: true,
+        chunksSortMode: 'manual',
+        chunks: ['runtime', 'vendors', 'app'],
         minify: isProduction
           ? {
               removeComments: true,
@@ -107,11 +116,11 @@ module.exports = (env, args) => {
         chunkFilename: '[id].css',
       }),
       new CopyWebpackPlugin([
-        { 
-          from: 'public', 
-          ignore: ['index.html']
-        }
-      ])
+        {
+          from: 'public',
+          ignore: ['index.html'],
+        },
+      ]),
     ]
       .concat(isProduction ? [] : [new webpack.HotModuleReplacementPlugin()])
       .concat(inAnalyze ? [new BundleAnalyzerPlugin()] : []),
