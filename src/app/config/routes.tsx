@@ -13,7 +13,7 @@ export const AppRoutes = () => (
         path="/externalLogin"
         exact
         component={() => {
-          window.location.href = `http://www.last.fm/api/auth/?api_key=${process.env.API_KEY}&cb=http://localhost:4200/login`;
+          window.location.href = `http://www.last.fm/api/auth/?api_key=${process.env.API_KEY}&cb=${process.env.APP_URL}/login`;
           return null;
         }}
       />

@@ -71,6 +71,10 @@ To analyze bundle size (via [webpack-bundle-analyzer](https://github.com/webpack
 yarn analyze
 ```
 
+## Source code base
+
+This application is built upon https://github.com/espeo/espeo-create-react-app template
+
 ## Used technologies
 
 * [React](https://reactjs.org/)
