@@ -1,7 +1,13 @@
 import localStorageService from '@core/services/local-storage';
 import { MainActions, MainActionTypes } from '../actions/index';
 import { initial } from '../initial';
-import { MainComponentState, PlayedTrack } from '../../namespace';
+import {
+  Album,
+  Artist,
+  MainComponentState,
+  PlayedTrack,
+  Track,
+} from '../../namespace';
 
 export const mainPageReducer = (
   state = initial,
@@ -67,24 +73,24 @@ export const mainPageReducer = (
         ...state,
         isLoading: false,
         error: false,
-        artists: [],
-        albums: [],
-        tracks: [],
+        artists: new Array<Artist>(),
+        albums: new Array<Album>(),
+        tracks: new Array<Track>(),
       };
     case MainActionTypes.CLEAR_ALBUMS:
       return {
         ...state,
         isLoading: false,
         error: false,
-        albums: [],
-        tracks: [],
+        albums: new Array<Album>(),
+        tracks: new Array<Track>(),
       };
     case MainActionTypes.CLEAR_TRACKS:
       return {
         ...state,
         isLoading: false,
         error: false,
-        tracks: [],
+        tracks: new Array<Track>(),
       };
     case MainActionTypes.SCROBBLE:
       return {
