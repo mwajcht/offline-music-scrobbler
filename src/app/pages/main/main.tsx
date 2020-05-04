@@ -13,6 +13,7 @@ import {
 } from '@core/pages/main/namespace';
 import { getReadableLength } from '@core/namespace/utils/utils';
 import { initial } from '@core/pages/main/store/initial';
+import { Container, Row, Col } from 'reactstrap';
 import { Title } from './components/title/title';
 import {
   clearAlbums,
@@ -174,59 +175,79 @@ class MainComponent extends PureComponent<
     ) : (
       <div>
         <Title text={intl.formatMessage({ id: 'page.main.title' })} />
-        <Input onChange={this.onInputChange} />
-        <Button
-          type="button"
-          text={intl.formatMessage({ id: 'page.main.artist.search' })}
-          clickHandler={this.searchArtists}
-        />
-        <div>
-          <Select
-            onChange={this.onArtistChange}
-            options={artists.map((artist: any) => artist.name)}
-          />
-        </div>
-        <div>
-          <Select
-            onChange={this.onAlbumChange}
-            options={albums.map((album: any) => album.name)}
-          />
-        </div>
-        <ul>
-          {tracks.map((track: Track) => {
-            return (
-              <li key={v1()}>
-                {track.name} - {getReadableLength(track.duration)}
-              </li>
-            );
-          })}
-        </ul>
-        <Button
-          type="button"
-          text={intl.formatMessage({ id: 'page.main.list.add' })}
-          clickHandler={this.addToList}
-          disabled={tracks.length === 0}
-        />
-        <Button
-          type="button"
-          text={intl.formatMessage({ id: 'page.main.scrobble' })}
-          clickHandler={this.scrobble}
-          disabled={playedTracks.length === 0}
-        />
-        <p>{intl.formatMessage({ id: 'page.main.tracks.to.scrobble' })}</p>
-        <ul>
-          {playedTracks.map((track: PlayedTrack) => {
-            return (
-              <li key={v1()}>
-                {track.artist} - {track.album} - {track.track}
-                <Button
-                  text="x"
-                  clickHandler={() => this.deleteFromList(track)}
-                />
-              </li>
-            );
-          })}
-        </ul>
+        <Container>
+          <Row>
+            <Col>
+              <Input onChange={this.onInputChange} />
+              <Button
+                type="button"
+                text={intl.formatMessage({ id: 'page.main.artist.search' })}
+                clickHandler={this.searchArtists}
+              />
+            </Col>
+            <Col>
+              <Select
+                onChange={this.onArtistChange}
+                options={artists.map((artist: any) => artist.name)}
+              />
+            </Col>
+            <Col>
+              <Select
+                onChange={this.onAlbumChange}
+                options={albums.map((album: any) => album.name)}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <ul>
+                {tracks.map((track: Track) => {
+                  return (
+                    <li key={v1()}>
+                      {track.name} - {getReadableLength(track.duration)}
+                    </li>
+                  );
+                })}
+              </ul>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Button
+                type="button"
+                text={intl.formatMessage({ id: 'page.main.list.add' })}
+                clickHandler={this.addToList}
+                disabled={tracks.length === 0}
+              />
+              <Button
+                type="button"
+                text={intl.formatMessage({ id: 'page.main.scrobble' })}
+                clickHandler={this.scrobble}
+                disabled={playedTracks.length === 0}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <p>
+                {intl.formatMessage({ id: 'page.main.tracks.to.scrobble' })}
+              </p>
+              <ul>
+                {playedTracks.map((track: PlayedTrack) => {
+                  return (
+                    <li key={v1()}>
+                      {track.artist} - {track.album} - {track.track}
+                      <Button
+                        text="x"
+                        clickHandler={() => this.deleteFromList(track)}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
