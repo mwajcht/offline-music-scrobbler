@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { InjectedIntlProps } from 'react-intl';
 import { Redirect } from 'react-router';
 import { Button, Input, Select } from '@core/components';
-import { v1 } from 'uuid';
 import localStorageService from '@core/services/local-storage';
 import {
   Album,
@@ -11,9 +10,10 @@ import {
   PlayedTrack,
   Track,
 } from '@core/pages/main/namespace';
-import { getReadableLength } from '@core/namespace/utils/utils';
 import { initial } from '@core/pages/main/store/initial';
 import { Container, Row, Col } from 'reactstrap';
+import { TrackList } from '@pages/main/components/tracklist/tracklist';
+import { PlayedTrackList } from '@pages/main/components/playedtracklist/playedtracklist';
 import { Title } from './components/title/title';
 import {
   clearAlbums,
@@ -146,7 +146,7 @@ class MainComponent extends PureComponent<
     }
   };
 
-  private deleteFromList(trackToRemove: PlayedTrack) {
+  private deleteFromList = (trackToRemove: PlayedTrack) => {
     this.setState(prevState => {
       const newPlayedTracks = [...prevState.playedTracks];
       const index = newPlayedTracks.findIndex(
@@ -164,7 +164,7 @@ class MainComponent extends PureComponent<
         playedTracks: newPlayedTracks,
       };
     });
-  }
+  };
 
   render() {
     const { artists, albums, tracks, intl } = this.props;
@@ -200,15 +200,7 @@ class MainComponent extends PureComponent<
           </Row>
           <Row>
             <Col>
-              <ul>
-                {tracks.map((track: Track) => {
-                  return (
-                    <li key={v1()}>
-                      {track.name} - {getReadableLength(track.duration)}
-                    </li>
-                  );
-                })}
-              </ul>
+              <TrackList tracks={tracks} />
             </Col>
           </Row>
           <Row>
@@ -229,22 +221,13 @@ class MainComponent extends PureComponent<
           </Row>
           <Row>
             <Col>
-              <p>
-                {intl.formatMessage({ id: 'page.main.tracks.to.scrobble' })}
-              </p>
-              <ul>
-                {playedTracks.map((track: PlayedTrack) => {
-                  return (
-                    <li key={v1()}>
-                      {track.artist} - {track.album} - {track.track}
-                      <Button
-                        text="x"
-                        clickHandler={() => this.deleteFromList(track)}
-                      />
-                    </li>
-                  );
+              <PlayedTrackList
+                title={intl.formatMessage({
+                  id: 'page.main.tracks.to.scrobble',
                 })}
-              </ul>
+                tracks={playedTracks}
+                deleteTrackHandler={this.deleteFromList}
+              />
             </Col>
           </Row>
         </Container>

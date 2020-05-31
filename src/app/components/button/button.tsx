@@ -1,4 +1,5 @@
 import React, { PureComponent, ButtonHTMLAttributes } from 'react';
+import { Button as ButtonWrapper } from './button.styles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
@@ -15,9 +16,9 @@ export class Button extends PureComponent<ButtonProps> {
     const { text } = this.props;
 
     return (
-      <button type="button" onClick={this.buttonClickHandler}>
+      <ButtonWrapper type="button" onClick={this.buttonClickHandler}>
         {text}
-      </button>
+      </ButtonWrapper>
     );
   }
 }
