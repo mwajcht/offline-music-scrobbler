@@ -188,13 +188,13 @@ class MainComponent extends PureComponent<
             <Col>
               <Select
                 onChange={this.onArtistChange}
-                options={artists.map((artist: any) => artist.name)}
+                options={artists.map((artist: Artist) => artist.name)}
               />
             </Col>
             <Col>
               <Select
                 onChange={this.onAlbumChange}
-                options={albums.map((album: any) => album.name)}
+                options={albums.map((album: Album) => album.name)}
               />
             </Col>
           </Row>

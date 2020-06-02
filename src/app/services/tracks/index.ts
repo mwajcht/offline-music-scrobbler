@@ -1,3 +1,4 @@
+import { AlbumInfo } from '@pages/main/namespace';
 import ApiService from '../config';
 
 export const getTracksService = (payload: {
@@ -5,13 +6,13 @@ export const getTracksService = (payload: {
   album: string;
 }) => {
   // ?method=album.getinfo&api_key=YOUR_API_KEY&artist=Cher&album=Believe&format=json
-  return ApiService.get('/', {
+  return ApiService.get<AlbumInfo>('/', {
     method: 'album.getinfo',
     artist: payload.artist,
     album: payload.album,
     api_key: process.env.API_KEY,
     format: 'json',
-  }).then((data: any) => {
-    return data.data;
+  }).then(response => {
+    return response.data;
   });
 };

@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import localStorageService from '@core/services/local-storage';
 import { ErrorCodes } from '../constants/constants';
 
@@ -36,17 +36,29 @@ class ApiService {
     );
   }
 
-  public get<T>(url: string, params?: any, options?: {}): Promise<T> {
+  public get<T>(
+    url: string,
+    params?: any,
+    options?: {},
+  ): Promise<AxiosResponse<T>> {
     const config = { params, ...options };
 
     return this.request.get(url, config);
   }
 
-  public post<T>(url: string, data?: {}, options?: {}): Promise<T> {
+  public post<T>(
+    url: string,
+    data?: {},
+    options?: {},
+  ): Promise<AxiosResponse<T>> {
     return this.request.post(url, data, options);
   }
 
-  public postFormData<T>(url: string, data?: {}, options?: {}): Promise<T> {
+  public postFormData<T>(
+    url: string,
+    data?: {},
+    options?: {},
+  ): Promise<AxiosResponse<T>> {
     return this.request.post(url, data, options);
   }
 

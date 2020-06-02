@@ -1,4 +1,4 @@
-import { PlayedTrack } from '@core/pages/main/namespace';
+import { PlayedTrack, Scrobbles } from '@core/pages/main/namespace';
 import ApiService from '../config';
 
 function getParameterName(parameter: string, index: number) {
@@ -60,11 +60,11 @@ export const getScrobbleService = (payload: {
   body.set('api_sig', getSignature(body));
   body.set('format', 'json');
 
-  return ApiService.post('/', body, {
+  return ApiService.post<Scrobbles>('/', body, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-  }).then((data: any) => {
-    return data.data;
+  }).then(response => {
+    return response.data;
   });
 };

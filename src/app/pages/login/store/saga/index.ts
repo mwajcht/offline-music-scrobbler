@@ -8,7 +8,10 @@ import {
   obtainSessionKeyFailed,
 } from '../actions';
 
-function* executeObtainSessionKey(action: any): SagaIterator {
+function* executeObtainSessionKey(action: {
+  payload: { token: string };
+  type: LoginActionTypes;
+}): SagaIterator {
   try {
     const response = yield call(getSessionService, action.payload);
     yield put(obtainSessionKeySuccess(response));

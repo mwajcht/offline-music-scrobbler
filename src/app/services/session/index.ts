@@ -1,3 +1,4 @@
+import { Session } from '@pages/login/namespace';
 import ApiService from '../config';
 
 export const getSessionService = (payload: { token: string }) => {
@@ -7,13 +8,13 @@ export const getSessionService = (payload: { token: string }) => {
   const sig = md5(
     `api_key${process.env.API_KEY}methodauth.getSessiontoken${payload.token}${process.env.API_SECRET}`,
   );
-  return ApiService.get('/', {
+  return ApiService.get<Session>('/', {
     method: 'auth.getSession',
     token: payload.token,
     api_key: process.env.API_KEY,
     api_sig: sig,
     format: 'json',
-  }).then((data: any) => {
-    return data.data;
+  }).then(response => {
+    return response.data;
   });
 };

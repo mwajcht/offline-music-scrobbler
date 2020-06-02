@@ -5,6 +5,7 @@ import { getArtistsService } from '@core/services/artists';
 import { getAlbumsService } from '@core/services/albums';
 import { getTracksService } from '@core/services/tracks';
 import { getScrobbleService } from '@core/services/scrobble';
+import { PlayedTrack } from '@pages/main/namespace';
 import {
   MainActionTypes,
   loadArtistsSuccess,
@@ -17,7 +18,10 @@ import {
   scrobbleFailed,
 } from '../actions';
 
-function* executeGetArtists(action: any): SagaIterator {
+function* executeGetArtists(action: {
+  payload: { name: string };
+  type: MainActionTypes;
+}): SagaIterator {
   try {
     const response = yield call(getArtistsService, action.payload);
     yield put(loadArtistsSuccess(response));
@@ -26,7 +30,10 @@ function* executeGetArtists(action: any): SagaIterator {
   }
 }
 
-function* executeGetAlbums(action: any): SagaIterator {
+function* executeGetAlbums(action: {
+  payload: { name: string };
+  type: MainActionTypes;
+}): SagaIterator {
   try {
     const response = yield call(getAlbumsService, action.payload);
     yield put(loadAlbumsSuccess(response));
@@ -35,7 +42,10 @@ function* executeGetAlbums(action: any): SagaIterator {
   }
 }
 
-function* executeGetTracks(action: any): SagaIterator {
+function* executeGetTracks(action: {
+  payload: { artist: string; album: string };
+  type: MainActionTypes;
+}): SagaIterator {
   try {
     const response = yield call(getTracksService, action.payload);
     yield put(loadTracksSuccess(response));
@@ -44,7 +54,13 @@ function* executeGetTracks(action: any): SagaIterator {
   }
 }
 
-function* executeScrobble(action: any): SagaIterator {
+function* executeScrobble(action: {
+  payload: {
+    tracks: PlayedTrack[];
+    sessionKey: string;
+  };
+  type: MainActionTypes;
+}): SagaIterator {
   try {
     const response = yield call(getScrobbleService, action.payload);
     yield put(scrobbleSuccess(response));
