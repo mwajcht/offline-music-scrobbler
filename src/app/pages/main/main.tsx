@@ -14,6 +14,7 @@ import { initial } from '@core/pages/main/store/initial';
 import { Container, Row, Col } from 'reactstrap';
 import { TrackList } from '@pages/main/components/tracklist/tracklist';
 import { PlayedTrackList } from '@pages/main/components/playedtracklist/playedtracklist';
+import { Searchbutton } from '@core/components/searchbutton/searchbutton';
 import { Title } from './components/title/title';
 import {
   clearAlbums,
@@ -179,7 +180,7 @@ class MainComponent extends PureComponent<
           <Row>
             <Col>
               <Input onChange={this.onInputChange} />
-              <Button
+              <Searchbutton
                 type="button"
                 text={intl.formatMessage({ id: 'page.main.artist.search' })}
                 clickHandler={this.searchArtists}
