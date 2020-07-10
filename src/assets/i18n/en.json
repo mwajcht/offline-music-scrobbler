@@ -4,6 +4,7 @@
   "page.main.list.add": "Add to list",
   "page.main.scrobble": "Scrobble",
   "page.main.title": "Offline music scrobbler",
+  "page.main.tracks.list": "Tracks on selected album",
   "page.main.tracks.to.scrobble": "Tracks to scrobble",
   "page.observables.hello": "hello observables"
 }

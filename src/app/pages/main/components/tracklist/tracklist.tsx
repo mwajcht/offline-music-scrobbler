@@ -4,13 +4,17 @@ import { Track } from '../../namespace';
 import { TrackInfo } from '../trackinfo/trackinfo';
 
 interface TrackListProps {
+  title: string;
   tracks: Track[];
 }
 
-export const TrackList = ({ tracks }: TrackListProps) => (
-  <ul>
-    {tracks.map((track: Track) => {
-      return <TrackInfo trackInfo={track} key={v1()} />;
-    })}
-  </ul>
+export const TrackList = ({ tracks, title }: TrackListProps) => (
+  <div>
+    <p>{title}</p>
+    <ul>
+      {tracks.map((track: Track) => {
+        return <TrackInfo trackInfo={track} key={v1()} />;
+      })}
+    </ul>
+  </div>
 );

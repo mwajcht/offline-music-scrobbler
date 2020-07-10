@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
+import { Input as InputWrapper } from './input.styles';
 
 interface InputProps {
   onChange: (text: string) => void;
+  placeholder: string;
 }
 
 export class Input extends PureComponent<InputProps> {
@@ -10,6 +12,7 @@ export class Input extends PureComponent<InputProps> {
   };
 
   public render() {
-    return <input onChange={this.onChange} />;
+    const { placeholder } = this.props;
+    return <InputWrapper onChange={this.onChange} placeholder={placeholder} />;
   }
 }

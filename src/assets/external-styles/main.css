@@ -1,3 +1,17 @@
 select {
   width: 100%;
 }
+
+.row {
+  background-color: #c8c8c8;
+  margin: 1em;
+  padding: 1em;
+}
+
+.flex {
+  display: flex;
+}
+
+ul {
+  background-color: #e0e0e0;
+}

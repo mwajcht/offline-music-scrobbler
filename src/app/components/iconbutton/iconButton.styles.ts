@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SearchButton = styled.button`
+export const IconButton = styled.button`
   margin-left: 10px;
   margin-right: 10px;
 `;

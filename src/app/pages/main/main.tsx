@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { InjectedIntlProps } from 'react-intl';
 import { Redirect } from 'react-router';
 import { Button, Input, Select } from '@core/components';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import localStorageService from '@core/services/local-storage';
 import {
   Album,
@@ -14,7 +15,7 @@ import { initial } from '@core/pages/main/store/initial';
 import { Container, Row, Col } from 'reactstrap';
 import { TrackList } from '@pages/main/components/tracklist/tracklist';
 import { PlayedTrackList } from '@pages/main/components/playedtracklist/playedtracklist';
-import { Searchbutton } from '@core/components/searchbutton/searchbutton';
+import { IconButton } from '@core/components/iconbutton/iconButton';
 import { Title } from './components/title/title';
 import {
   clearAlbums,
@@ -179,12 +180,20 @@ class MainComponent extends PureComponent<
         <Container>
           <Row>
             <Col>
-              <Input onChange={this.onInputChange} />
-              <Searchbutton
-                type="button"
-                text={intl.formatMessage({ id: 'page.main.artist.search' })}
-                clickHandler={this.searchArtists}
-              />
+              <div className="flex">
+                <Input
+                  onChange={this.onInputChange}
+                  placeholder={intl.formatMessage({
+                    id: 'page.main.artist.search',
+                  })}
+                />
+                <IconButton
+                  type="button"
+                  text=""
+                  icon={faSearch}
+                  clickHandler={this.searchArtists}
+                />
+              </div>
             </Col>
             <Col>
               <Select
@@ -201,7 +210,10 @@ class MainComponent extends PureComponent<
           </Row>
           <Row>
             <Col>
-              <TrackList tracks={tracks} />
+              <TrackList
+                title={intl.formatMessage({ id: 'page.main.tracks.list' })}
+                tracks={tracks}
+              />
             </Col>
           </Row>
           <Row>

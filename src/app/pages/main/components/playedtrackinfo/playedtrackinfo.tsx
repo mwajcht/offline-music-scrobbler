@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button } from '@core/components';
+import { IconButton } from '@core/components/iconbutton/iconButton';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { PlayedTrack } from '../../namespace';
 
 interface PlayedTrackInfoProps {
@@ -13,6 +14,10 @@ export const PlayedTrackInfo = ({
 }: PlayedTrackInfoProps) => (
   <li>
     {trackInfo.artist} - {trackInfo.album} - {trackInfo.track}
-    <Button text="X" clickHandler={() => deleteTrackHandler(trackInfo)} />
+    <IconButton
+      text=""
+      clickHandler={() => deleteTrackHandler(trackInfo)}
+      icon={faTrash}
+    />
   </li>
 );
