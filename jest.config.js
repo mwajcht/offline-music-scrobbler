@@ -17,7 +17,7 @@ module.exports = {
   moduleDirectories: ['node_modules', 'src'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
-  setupFiles: ['<rootDir>/test-setup.ts'],
+  setupFiles: ['<rootDir>/test-setup.ts', 'jest-localstorage-mock'],
   verbose: true,
   collectCoverage: true,
 };
