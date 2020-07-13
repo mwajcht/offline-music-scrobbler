@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import { InjectedIntlProps } from 'react-intl';
 import { Redirect } from 'react-router';
-import { Button, Input, Select } from '@core/components';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Button, Select } from '@core/components';
 import localStorageService from '@core/services/local-storage';
 import {
   Album,
@@ -12,10 +11,10 @@ import {
   Track,
 } from '@core/pages/main/namespace';
 import { initial } from '@core/pages/main/store/initial';
-import { Container, Row, Col } from 'reactstrap';
+import { Col, Container, Row } from 'reactstrap';
 import { TrackList } from '@pages/main/components/tracklist/tracklist';
 import { PlayedTrackList } from '@pages/main/components/playedtracklist/playedtracklist';
-import { IconButton } from '@core/components/iconbutton/iconButton';
+import { ArtistSearch } from '@pages/main/components/artistsearch/artistSearch';
 import { Title } from './components/title/title';
 import {
   clearAlbums,
@@ -180,20 +179,13 @@ class MainComponent extends PureComponent<
         <Container>
           <Row>
             <Col>
-              <div className="flex">
-                <Input
-                  onChange={this.onInputChange}
-                  placeholder={intl.formatMessage({
-                    id: 'page.main.artist.search',
-                  })}
-                />
-                <IconButton
-                  type="button"
-                  text=""
-                  icon={faSearch}
-                  clickHandler={this.searchArtists}
-                />
-              </div>
+              <ArtistSearch
+                clickHandler={this.searchArtists}
+                placeholder={intl.formatMessage({
+                  id: 'page.main.artist.search',
+                })}
+                onChange={this.onInputChange}
+              />
             </Col>
             <Col>
               <Select

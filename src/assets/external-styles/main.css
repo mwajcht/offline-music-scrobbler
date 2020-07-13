@@ -8,10 +8,6 @@ select {
   padding: 1em;
 }
 
-.flex {
-  display: flex;
-}
-
 ul {
   background-color: #e0e0e0;
 }
