@@ -89,7 +89,7 @@
     "@fortawesome/fontawesome-svg-core": "1.2.29",
     "@fortawesome/free-solid-svg-icons": "5.13.1",
     "@fortawesome/react-fontawesome": "0.1.11",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "core-js": "^3.1.4",
     "dayjs": "1.8.17",
     "md5": "2.2.1",
